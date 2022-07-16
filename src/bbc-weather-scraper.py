@@ -3,7 +3,17 @@ from datetime import datetime
 from apiwrapper import RestConsumer
 bbc_weather = RestConsumer(base_url="https://weather-broker-cdn.api.bbci.co.uk/en/", append_slash=True)
 
-locations = ["2643743"]
+locations = [
+    "2643743", # Greater London
+    "2634341", # City of Westminster
+    "2650225", # Edinburgh
+    "2653822", # Cardiff
+    "2655984", # Belfast
+    "2988507", # Paris
+    "4140963", # Washington DC
+    "105343",  # Jeddah
+    "2147714", # Sydney
+    ]
 
 for location in locations:
     response = bbc_weather.forecast.aggregated[location]()
