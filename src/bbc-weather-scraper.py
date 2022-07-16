@@ -14,6 +14,6 @@ for location in locations:
 
     # Save as CSV
     time_now_string = datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%S")
-    results.to_csv("output/scrapes/detailed/scrape_{}_{}.csv".format(location, time_now_string), index=False)
+    detailed.to_csv("output/scrapes/detailed/scrape_{}_{}.csv".format(location, time_now_string), index=False)
 
 
