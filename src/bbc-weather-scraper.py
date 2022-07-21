@@ -27,18 +27,22 @@ def save_scrape_to_csv(df, folder, label):
 
 for location_id, location_name in locations.items():
     response = bbc_weather.forecast.aggregated[location_id]()
-    print(response) # for debugging
-    results = pd.DataFrame.from_records(response["forecasts"])
+    try:
+        results = pd.DataFrame.from_records(response["forecasts"])
 
-    # Detailed forecasts
-    detailed = pd.json_normalize(results["detailed"], ["reports"], ["issueDate", "lastUpdated"])
-    detailed = append_location_details(detailed, location_id, location_name)
-    save_scrape_to_csv(detailed, "output/scrapes/detailed", label=location_name)
+        # Detailed forecasts
+        detailed = pd.json_normalize(results["detailed"], ["reports"], ["issueDate", "lastUpdated"])
+        detailed = append_location_details(detailed, location_id, location_name)
+        save_scrape_to_csv(detailed, "output/scrapes/detailed", label=location_name)
 
-    # Daily summaries
-    summary = pd.json_normalize(results["summary"])
-    summary = append_location_details(summary, location_id, location_name)
-    save_scrape_to_csv(summary, "output/scrapes/summary", label=location_name)
+        # Daily summaries
+        summary = pd.json_normalize(results["summary"])
+        summary = append_location_details(summary, location_id, location_name)
+        save_scrape_to_csv(summary, "output/scrapes/summary", label=location_name)
+        
+    except KeyError:
+        print(response)
+        print("Bypassing {} {} due to KeyError".format(location_id, location_name))
 
 
 
