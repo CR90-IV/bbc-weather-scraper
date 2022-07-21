@@ -27,6 +27,7 @@ def save_scrape_to_csv(df, folder, label):
 
 for location_id, location_name in locations.items():
     response = bbc_weather.forecast.aggregated[location_id]()
+    print(response) # for debugging
     results = pd.DataFrame.from_records(response["forecasts"])
 
     # Detailed forecasts
